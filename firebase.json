@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "bin\\Release\\net8.0\\browser-wasm\\publish\\wwwroot",
+    "public": "DosageCalculator\\bin\\Release\\net8.0\\publish\\wwwroot",
     "ignore": [
       "firebase.json",
       "**/.*",

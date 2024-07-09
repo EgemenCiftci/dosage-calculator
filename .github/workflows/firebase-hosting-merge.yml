@@ -15,15 +15,15 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'  # Adjust this to your Blazor project's .NET version
+          dotnet-version: '8.0'
       
       - name: Publish Blazor project
-        run: dotnet publish DosageCalculator.csproj -c Release -o release --nologo
-      
-      - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
+        run: dotnet publish
+
+      - uses: actions/checkout@v4
+      - run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          args: deploy --only hosting
-        env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          PROJECT_ID: dsg-calc
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DSG_CALC }}
+          projectId: dsg-calc
