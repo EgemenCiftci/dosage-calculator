@@ -17,8 +17,6 @@ jobs:
       - name: Publish Blazor project
         run: dotnet publish
 
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
