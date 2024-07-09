@@ -1,0 +1,36 @@
+﻿@page "/paracetamol"
+
+<PageTitle>Paracetamol Dosage Calculator</PageTitle>
+
+<h3>Paracetamol Dosage Calculator</h3>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Weight</span>
+    </div>
+    <input @bind="weight" @bind:event="oninput" type="number" class="form-control text-end" aria-label="Weight" />
+    <div class="input-group-append">
+        <span class="input-group-text">kg</span>
+    </div>
+</div>
+<div>
+    Maximum single dose of paracetamol is @CalculateSingleDose(weight) mg.<br />
+    Maximum daily dose of paracetamol is @CalculateDailyDose(weight) mg.
+</div>
+<br />
+<div>
+    Administer the single dose maximum 4 times in 24 hours. Wait at least 4 hours between doses.
+</div>
+
+@code {
+    private int weight = 40;
+
+    private double CalculateSingleDose(int weight)
+    {
+        return Math.Min(1000, weight * 15);
+    }
+
+    private double CalculateDailyDose(int weight)
+    {
+        return Math.Min(4000, weight * 60);
+    }
+}

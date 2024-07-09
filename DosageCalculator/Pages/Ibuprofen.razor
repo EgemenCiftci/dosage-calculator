@@ -1,0 +1,37 @@
+﻿@page "/"
+@page "/ibuprofen"
+
+<PageTitle>Ibuprofen Dosage Calculator</PageTitle>
+
+<h3>Ibuprofen Dosage Calculator</h3>
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Weight</span>
+    </div>
+    <input @bind="weight" @bind:event="oninput" type="number" class="form-control text-end" aria-label="Weight" />
+    <div class="input-group-append">
+        <span class="input-group-text">kg</span>
+    </div>
+</div>
+<div>
+    Maximum single dose of ibuprofen is @CalculateSingleDose(weight) mg.<br />
+    Maximum daily dose of ibuprofen is @CalculateDailyDose(weight) mg.
+</div>
+<br />
+<div>
+    Administer if needed every 6 to 8 hours. Do not give more than 4 doses in 24 hours.
+</div>
+
+@code {
+    private int weight = 40;
+
+    private double CalculateSingleDose(int weight)
+    {
+        return Math.Min(400, weight * 10);
+    }
+
+    private double CalculateDailyDose(int weight)
+    {
+        return Math.Min(1200, weight * 40);
+    }
+}
