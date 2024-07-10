@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "DosageCalculator\\bin\\Release\\net8.0\\publish\\wwwroot",
+    "public": "Release\\net8.0\\publish\\wwwroot",
     "ignore": [
       "firebase.json",
       "**/.*",
