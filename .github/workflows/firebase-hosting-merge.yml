@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
             
       - name: Publish Blazor project
-        run: dotnet publish
+        run: dotnet publish -c Release -o release DosageCalculator/DosageCalculator.csproj
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
