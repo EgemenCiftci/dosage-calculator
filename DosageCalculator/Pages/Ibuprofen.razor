@@ -3,35 +3,42 @@
 
 <PageTitle>Ibuprofen Dosage Calculator</PageTitle>
 
-<h3>Ibuprofen Dosage Calculator</h3>
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Weight</span>
+<section class="calculator-page" aria-labelledby="calculator-title">
+    <header class="page-heading">
+        <div><span class="eyebrow">Dosage calculator</span><h1 id="calculator-title">Ibuprofen</h1></div>
+        <span class="medicine-badge"><span></span> Analgesic</span>
+    </header>
+
+    <div class="calculator-grid">
+        <section class="calculator-card input-card" aria-label="Patient weight">
+            <div class="card-heading"><span class="step-number">1</span><div><h2>Enter weight</h2><p>Use the child's weight in kilograms.</p></div></div>
+            <label class="weight-label" for="ibuprofen-weight">Weight</label>
+            <div class="weight-control"><input id="ibuprofen-weight" @bind="weight" @bind:event="oninput" type="number" min="0" max="200" step="1" inputmode="decimal" /><span>kg</span></div>
+            <div class="quick-weights"><span>Quick select</span><div>
+                <button type="button" class="@GetWeightButtonClass(10)" @onclick="() => SetWeight(10)">10 kg</button>
+                <button type="button" class="@GetWeightButtonClass(20)" @onclick="() => SetWeight(20)">20 kg</button>
+                <button type="button" class="@GetWeightButtonClass(40)" @onclick="() => SetWeight(40)">40 kg</button>
+                <button type="button" class="@GetWeightButtonClass(60)" @onclick="() => SetWeight(60)">60 kg</button>
+            </div></div>
+        </section>
+
+        <section class="calculator-card result-card" aria-label="Calculated dosage">
+            <div class="card-heading"><span class="step-number">2</span><div><h2>Calculated dosage</h2><p>Maximum recommended amounts.</p></div></div>
+            <div class="dose-results">
+                <div class="dose-row"><span class="dose-label">Maximum single dose</span><strong>@CalculateSingleDose(weight)<small>mg</small></strong></div>
+                <div class="dose-row"><span class="dose-label">Maximum daily dose</span><strong>@CalculateDailyDose(weight)<small>mg</small></strong></div>
+            </div>
+            <div class="schedule-box"><span class="schedule-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg></span><div><strong>Administration schedule</strong><p>Every 6–8 hours, if needed. Do not exceed 4 doses in 24 hours.</p></div></div>
+        </section>
     </div>
-    <input @bind="weight" @bind:event="oninput" type="number" class="form-control text-end" aria-label="Weight" />
-    <div class="input-group-append">
-        <span class="input-group-text">kg</span>
-    </div>
-</div>
-<div>
-    Maximum single dose of ibuprofen is <b>@CalculateSingleDose(weight) mg</b>.<br />
-    Maximum daily dose of ibuprofen is <b>@CalculateDailyDose(weight) mg</b>.
-</div>
-<br />
-<div>
-    Administer if needed every 6 to 8 hours. Do not give more than 4 doses in 24 hours.
-</div>
+
+    <div class="medical-disclaimer"><strong>Medical information</strong><p>This tool provides general information only and does not replace professional medical advice. Consult a healthcare professional before use.</p></div>
+</section>
 
 @code {
     private int weight = 40;
-
-    private double CalculateSingleDose(int weight)
-    {
-        return Math.Min(400, weight * 10);
-    }
-
-    private double CalculateDailyDose(int weight)
-    {
-        return Math.Min(1200, weight * 40);
-    }
+    private void SetWeight(int value) => weight = value;
+    private string GetWeightButtonClass(int value) => weight == value ? "selected" : string.Empty;
+    private double CalculateSingleDose(int weight) => Math.Min(400, Math.Max(0, weight) * 10);
+    private double CalculateDailyDose(int weight) => Math.Min(1200, Math.Max(0, weight) * 40);
 }
